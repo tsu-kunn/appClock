@@ -7,6 +7,7 @@ function createWindow() {
         width: 380,
         height: 696,
         resizable: false,   // Windowサイズ固定
+        icon: __dirname + '/../build/logo192.png',
     });
 
     // load the index.html of the app.
