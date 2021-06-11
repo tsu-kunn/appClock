@@ -5,6 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Electron Debug",
+            "program": "${workspaceFolder}/src/electron_main.js",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node",
+            // "runtimeArgs": [
+            //     "--enable-logging"
+            // ],
+            "env": {
+                "NODE_ENV": "debug"
+            }
+        },
+        {
             "name": "React Debug",
             "request": "launch",
             "type": "pwa-chrome",
