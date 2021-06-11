@@ -20,3 +20,9 @@ Create React Appで作成し、Electronでアプリの皮を被せています�
   - ".env" ファイルで起動しないように設定しているため（VSCodeデバッグ向け）
 - build フォルダをリポジトリ管理
   - ".gitignore" で build 部分をコメントアウト
+
+## 画像
+- amiya.png
+  - https://arknights.wikiru.jp/index.php?%A5%A2%A1%BC%A5%DF%A5%E4
+- W_05.png
+  - https://arknights.wikiru.jp/index.php?W
