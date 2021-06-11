@@ -1,0 +1,134 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+}
+
+.game-time {
+  margin-left: 20px;
+  position: relative;
+}
+
+.game-clock {
+  position: absolute;
+  top: 2%;
+  left :2%;
+  /* white-space: nowrap; */
+  width: 220px;
+}
+
+.game-message {
+  position: absolute;
+  top: 38%;
+  left: 2%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.date {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.clock {
+  display: flex;
+  border-bottom: 2px solid blueviolet;
+  font-size: 48px;
+  font-weight: bold;
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+
+.ampm {
+  font-size: 30%;
+  margin-top: 15.5%;
+}
+
+.seconds {
+  font-size: 50%;
+  margin-top: 10.5%;
+}
+
+.message {
+  /* background: rgba(222, 219, 202, 0.85); */
+  border-radius: 15%;
+  padding: 10px 5px;
+}
+
+.react-message {
+  /* background: rgba(222, 219, 202, 0.85); */
+  border-radius: 15%;
+  padding: 10px 5px;
+  margin-top: 15%;
+}
+
+img.chara-img {
+	width: auto;
+	height: 320px;
+  margin-top: 50%;
+  margin-left: 20%;
+}
+
+@media (max-width: 600px) {
+  .game {
+    flex-direction: column;
+  }
+
+  .game-message {
+    top: 30%;
+    left: 2%;
+  }
+
+  img.chara-img {
+    width: 320px;
+    height: auto;
+    margin-top: 33%;
+    margin-left: 5%;
+  }
+}
+
