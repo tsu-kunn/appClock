@@ -166,6 +166,7 @@ class AppClock extends React.Component {
             dateHistory: null,
             pictFlag: 1,
             reactMsg: null,
+            apptimeStyle: { backgroundColor: "#8490c8" }
         };
     }
 
@@ -182,31 +183,39 @@ class AppClock extends React.Component {
         });
     }
 
+    changeApptimeStyle(bgColor) {
+        let chgStyle = {
+            backgroundColor: bgColor
+        }
+
+        this.setState({
+            apptimeStyle: chgStyle
+        })
+    }
+
     render() {
         return (
-            <React.Fragment>
-                <div className="app-main">
-                    <div className="app-time">
-                        <PictureChange
-                            flg={this.state.pictFlag}
-                            setMsg={(m) => this.reactMessage(m)}
+            <div className="app-main">
+                <div className="app-time" style={this.state.apptimeStyle}>
+                    <PictureChange
+                        flg={this.state.pictFlag}
+                        setMsg={(m) => this.reactMessage(m)}
+                    />
+                    <div className="app-clock">
+                        <Clock
+                            onClick={(d) => this.dateClick(d)}
                         />
-                        <div className="app-clock">
-                            <Clock
-                                onClick={(d) => this.dateClick(d)}
-                            />
-                            <DateLabel
-                                date={this.state.dateHistory}
-                            />
-                        </div>
-                        <div className="app-message">
-                            <Message
-                                reactMsg={this.state.reactMsg}
-                            />
-                        </div>
+                        <DateLabel
+                            date={this.state.dateHistory}
+                        />
+                    </div>
+                    <div className="app-message">
+                        <Message
+                            reactMsg={this.state.reactMsg}
+                        />
                     </div>
                 </div>
-            </React.Fragment>
+            </div>
         );
     }
 }
