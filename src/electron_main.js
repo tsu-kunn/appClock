@@ -4,16 +4,22 @@ const url = require('url');
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600
+        width: 380,
+        height: 696,
+        resizable: false,   // Windowサイズ固定
     });
 
     // load the index.html of the app.
-    mainWindow.loadFile('./build/index.html');
+    mainWindow.loadFile(path.join(__dirname, '../build/index.html'));
     // mainWindow.loadURL("http://localhost:3000");
 
+    // メニューバー非表示（暫定）
+    // mainWindow.setMenuBarVisibility(false);
+
     // 開発ツールを有効
-    // mainWindow.webContents.openDevTools();
+    if (process.env.NODE_ENV === "debug") {
+        mainWindow.webContents.openDevTools();
+    }
 
     // Emitted when the window is closed.
     // mainWindow.on('closed', function () {
