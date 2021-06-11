@@ -6,62 +6,6 @@ import pic1 from "./image/amiya.png";
 import pic2 from "./image/W_05.png";
 
 
-function Square(props) {
-    return (
-        <button className="square" onClick={props.onClick}>
-            {props.value}
-        </button>
-    );
-}
-
-function Board(props) {
-    function renderSquare(i) {
-        return (
-            <Square
-                value={props.squares[i]}
-                onClick={() => props.onClick(i)}
-            />
-        );
-    }
-
-    return (
-        <div>
-            {[0, 1, 2].map((i) =>
-                <div className="board-row" key={i.toString()}>
-                    {renderSquare(0 + i * 3)}
-                    {renderSquare(1 + i * 3)}
-                    {renderSquare(2 + i * 3)}
-                </div>
-            )}
-        </div>
-    );
-}
-
-// class Board extends React.Component {
-//     renderSquare(i) {
-//         return (
-//             <Square
-//                 value={this.props.squares[i]}
-//                 onClick={() => this.props.onClick(i)}
-//             />
-//         );
-//     }
-
-//     render() {
-//         return (
-//             <div>
-//                 {[0, 1, 2].map((i) =>
-//                     <div className="board-row">
-//                         {this.renderSquare(0 + i * 3)}
-//                         {this.renderSquare(1 + i * 3)}
-//                         {this.renderSquare(2 + i * 3)}
-//                     </div>
-//                 )}
-//             </div>
-//         );
-//     }
-// }
-
 function Clock(props) {
     const [date, setDate] = useState(new Date());
     const [hour12, setHour12] = useState(false);
@@ -122,49 +66,6 @@ function Clock(props) {
         </div>
     );
 }
-
-// class Clock extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             date: new Date(),
-//         };
-//     }
-
-//     // DOMが描画されるときに呼ばれる
-//     componentDidMount() {
-//         this.timerID = setInterval(() => this.tick(), 1000);
-//     }
-
-//     // DOMが削除されるときに呼ばれる
-//     componentWillUnmount() {
-//         clearInterval(this.timerID);
-//     }
-
-//     // コンポーネントの変数を更新
-//     tick() {
-//         this.setState({
-//             date: new Date(),
-//         });
-//     }
-
-//     // 時刻表示
-//     render() {
-//         let opts = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-//         let localDate = new Intl.DateTimeFormat("ja-JP", opts).format(this.state.date);
-
-//         return (
-//             <div>
-//                 <p className="date">
-//                     {localDate}
-//                 </p>
-//                 <p className="clock">
-//                     {this.state.date.toLocaleTimeString("ja-JP")}
-//                 </p>
-//             </div>
-//         );
-//     }
-// }
 
 function DateLabel(props) {
     // let lblStr = "0000年00月00日〇曜日 00:00:00"
@@ -258,43 +159,14 @@ function Message(props) {
 }
 
 
-class Game extends React.Component {
+class AppClock extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            history: [{ squares: Array(9).fill(null), }],
-            stepNumber: 0,
-            xIsNext: true,
             dateHistory: null,
             pictFlag: 1,
             reactMsg: null,
         };
-    }
-
-    handleClick(i) {
-        const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        const current = history[history.length - 1];
-        const squares = current.squares.slice();
-
-        if (calculateWinner(squares) || squares[i]) {
-            return;
-        }
-
-        squares[i] = this.state.xIsNext ? 'X' : 'O';
-        this.setState({
-            history: history.concat([{
-                squares: squares,
-            }]),
-            stepNumber: history.length,
-            xIsNext: !this.state.xIsNext,
-        });
-    }
-
-    jumpTo(step) {
-        this.setState({
-            stepNumber: step,
-            xIsNext: (step % 2) === 0,
-        });
     }
 
     dateClick(d) {
@@ -311,47 +183,15 @@ class Game extends React.Component {
     }
 
     render() {
-        const history = this.state.history;
-        const current = history[this.state.stepNumber];
-        const winner = calculateWinner(current.squares);
-
-        const moves = history.map((step, move) => {
-            const desc = move ? "Go to move #" + move : "Go to game start";
-            return (
-                <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
-                </li>
-            );
-        });
-
-        let status;
-        if (winner) {
-            status = 'Winner: ' + winner;
-        } else if (this.state.stepNumber === 9) {
-            status = 'Draw';
-        } else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-        }
-
         return (
             <React.Fragment>
-                <div className="game">
-                    <div className="game-board">
-                        <Board
-                            squares={current.squares}
-                            onClick={(i) => this.handleClick(i)}
-                        />
-                    </div>
-                    <div className="game-info">
-                        <div>{status}</div>
-                        <ol>{moves}</ol>
-                    </div>
-                    <div className="game-time">
+                <div className="app-main">
+                    <div className="app-time">
                         <PictureChange
                             flg={this.state.pictFlag}
                             setMsg={(m) => this.reactMessage(m)}
                         />
-                        <div className="game-clock">
+                        <div className="app-clock">
                             <Clock
                                 onClick={(d) => this.dateClick(d)}
                             />
@@ -359,7 +199,7 @@ class Game extends React.Component {
                                 date={this.state.dateHistory}
                             />
                         </div>
-                        <div className="game-message">
+                        <div className="app-message">
                             <Message
                                 reactMsg={this.state.reactMsg}
                             />
@@ -371,29 +211,9 @@ class Game extends React.Component {
     }
 }
 
-function calculateWinner(squares) {
-    const lines = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ];
-    for (let i = 0; i < lines.length; i++) {
-        const [a, b, c] = lines[i];
-        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return squares[a];
-        }
-    }
-    return null;
-}
-
 // ========================================
 
 ReactDOM.render(
-    <Game />,
+    <AppClock />,
     document.getElementById('root')
 );
