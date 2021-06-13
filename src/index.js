@@ -5,6 +5,8 @@ import './index.css';
 import pic1 from "./image/amiya.png";
 import pic2 from "./image/W_05.png";
 
+import msgList from "./message.json";
+
 
 function Clock(props) {
     const [date, setDate] = useState(new Date());
@@ -120,16 +122,10 @@ function PictureChange(props) {
 
 function Message(props) {
     const [msg, setMsg] = useState(null);
-    const msgList = [
-        "おはよう",
-        "こんばんは",
-        "お疲れ様",
-        "おやすみなさい"
-    ];
 
     function selectMsg() {
         if (msg === null) {
-            setMsg(msgList[Math.floor(Math.random() * msgList.length)]);
+            setMsg(msgList.AM[Math.floor(Math.random() * msgList.AM.length)]);
         } else {
             setMsg(null);
         }
