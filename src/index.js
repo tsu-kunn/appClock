@@ -5,7 +5,8 @@ import './index.css';
 import pic1 from "./image/amiya.png";
 import pic2 from "./image/W_05.png";
 
-import msgList from "./message.json";
+import message from "./message.json";
+import reactmsg from "./reactmsg.json";
 
 
 function Clock(props) {
@@ -35,6 +36,9 @@ function Clock(props) {
     let minites = date.getMinutes();
     let seconds = date.getSeconds();
     let ampm = null;
+
+	// check am or pm
+	//props.chgAmpm(hours >= 12 ? true : false);
 
     if (hour12) {
         ampm = hours >= 12 ? "PM" : "AM";
@@ -91,18 +95,11 @@ function PictureChange(props) {
     const [timerID, setTimerID] = useState(null);
 
     function dialogue() {
-        const msgList = [
-            "なに？",
-            "怒るよ",
-            "えへへ",
-            "ひゃあ"
-        ];
-
         if (timerID != null) {
             clearInterval(timerID);
         }
 
-        props.setMsg(msgList[Math.floor(Math.random() * msgList.length)]);
+        props.setMsg(reactmsg.list[Math.floor(Math.random() * reactmsg.list.length)]);
         setTimerID(setTimeout(() => { props.setMsg(null); }, 3000));
     }
 
@@ -125,7 +122,8 @@ function Message(props) {
 
     function selectMsg() {
         if (msg === null) {
-            setMsg(msgList.AM[Math.floor(Math.random() * msgList.AM.length)]);
+			const msgList = props.ampm ? message.PM : message.AM;
+            setMsg(msgList[Math.floor(Math.random() * msgList.length)]);
         } else {
             setMsg(null);
         }
@@ -161,6 +159,7 @@ class AppClock extends React.Component {
         this.state = {
             dateHistory: null,
             pictFlag: 1,
+			ampm: false,
             reactMsg: null,
             apptimeStyle: { backgroundColor: "#8490c8" }
         };
@@ -173,7 +172,13 @@ class AppClock extends React.Component {
         });
     }
 
-    reactMessage(m) {
+	changeAmpm(f) {
+		this.setState({
+			ampm: f,
+		});
+	}
+
+	reactMessage(m) {
         this.setState({
             reactMsg: m,
         });
@@ -200,6 +205,7 @@ class AppClock extends React.Component {
                     <div className="app-clock">
                         <Clock
                             onClick={(d) => this.dateClick(d)}
+							chgAmpm={(f) => this.changeAmpm(f)}
                         />
                         <DateLabel
                             date={this.state.dateHistory}
@@ -207,6 +213,7 @@ class AppClock extends React.Component {
                     </div>
                     <div className="app-message">
                         <Message
+							ampm={this.state.ampm}
                             reactMsg={this.state.reactMsg}
                         />
                     </div>
