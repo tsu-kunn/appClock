@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+// import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+
 import pic1 from "./image/amiya.png";
 import pic2 from "./image/W_05.png";
 
@@ -218,3 +220,6 @@ ReactDOM.render(
     <AppClock />,
     document.getElementById('root')
 );
+
+// PWAに設定
+// serviceWorkerRegistration.register();
