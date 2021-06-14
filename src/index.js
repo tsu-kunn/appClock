@@ -21,6 +21,14 @@ function Clock(props) {
         };
     }, []);
 
+    useEffect(() => {
+        const timerID = setInterval(() => { props.chgAmpm(date.getHours() >= 12 ? true : false)}, 1000);
+
+        return () => {
+            clearInterval(timerID);
+        };
+    });
+
     function clickEvent() {
         props.onClick(date);
         setHour12(hour12 ^ 1);
@@ -36,9 +44,6 @@ function Clock(props) {
     let minites = date.getMinutes();
     let seconds = date.getSeconds();
     let ampm = null;
-
-	// check am or pm
-	//props.chgAmpm(hours >= 12 ? true : false);
 
     if (hour12) {
         ampm = hours >= 12 ? "PM" : "AM";
@@ -178,7 +183,7 @@ class AppClock extends React.Component {
 		});
 	}
 
-	reactMessage(m) {
+    reactMessage(m) {
         this.setState({
             reactMsg: m,
         });
