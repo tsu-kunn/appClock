@@ -21,14 +21,6 @@ function Clock(props) {
         };
     }, []);
 
-    useEffect(() => {
-        const timerID = setInterval(() => { props.chgAmpm(date.getHours() >= 12 ? true : false)}, 1000);
-
-        return () => {
-            clearInterval(timerID);
-        };
-    });
-
     function clickEvent() {
         props.onClick(date);
         setHour12(hour12 ^ 1);
@@ -127,7 +119,8 @@ function Message(props) {
 
     function selectMsg() {
         if (msg === null) {
-			const msgList = props.ampm ? message.PM : message.AM;
+            const date = new Date();
+            const msgList = date.getHours() >= 12 ? message.PM : message.AM;
             setMsg(msgList[Math.floor(Math.random() * msgList.length)]);
         } else {
             setMsg(null);
@@ -164,7 +157,6 @@ class AppClock extends React.Component {
         this.state = {
             dateHistory: null,
             pictFlag: 1,
-			ampm: false,
             reactMsg: null,
             apptimeStyle: { backgroundColor: "#8490c8" }
         };
@@ -176,12 +168,6 @@ class AppClock extends React.Component {
             pictFlag: this.state.pictFlag ^ 1,
         });
     }
-
-	changeAmpm(f) {
-		this.setState({
-			ampm: f,
-		});
-	}
 
     reactMessage(m) {
         this.setState({
@@ -210,7 +196,6 @@ class AppClock extends React.Component {
                     <div className="app-clock">
                         <Clock
                             onClick={(d) => this.dateClick(d)}
-							chgAmpm={(f) => this.changeAmpm(f)}
                         />
                         <DateLabel
                             date={this.state.dateHistory}
@@ -218,7 +203,6 @@ class AppClock extends React.Component {
                     </div>
                     <div className="app-message">
                         <Message
-							ampm={this.state.ampm}
                             reactMsg={this.state.reactMsg}
                         />
                     </div>
