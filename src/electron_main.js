@@ -14,7 +14,7 @@ const DEFAULT_POS = {
 
 const DEFAULT_SIZE = {
     width: 380,
-    height: 720
+    height: 724
 }
 
 // 実行環境がmacOSならtrue
@@ -90,6 +90,10 @@ function createWindow() {
         useContentSize: true,
         icon: __dirname + '/../build/logo192.png',
     });
+
+    // Windowサイズ固定ではなく、最大・最小でサイズ制限
+    mainWindow.setMaximumSize(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
+    mainWindow.setMinimumSize(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
 
     // load the index.html of the app.
     mainWindow.loadFile(path.join(__dirname, '../build/index.html'));
