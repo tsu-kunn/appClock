@@ -118,6 +118,25 @@ function PictureChange(props) {
     // );
 }
 
+// トグルボタン
+function SettingButton(props) {
+    return (
+        <React.Fragment>
+            <div class="item-frame">
+                <input type='checkbox' id='setting-item-1' class="checkbox" />
+                <label class="switch" for='setting-item-1'></label>
+                <label class="text" for='setting-item-1'>台詞</label>
+            </div>
+            <div class="item-frame">
+                <input type='checkbox' id='setting-item-2' class="checkbox" checked="checked" />
+                <label class="switch" for='setting-item-2'></label>
+                <label class="text" for='setting-item-2'>24時間</label>
+            </div>
+        </React.Fragment>
+    );
+}
+
+
 function Message(props) {
     const [msg, setMsg] = useState(null);
 
@@ -208,6 +227,10 @@ class AppClock extends React.Component {
                     <div className="app-message">
                         <Message
                             reactMsg={this.state.reactMsg}
+                        />
+                    </div>
+                    <div className="app-button">
+                        <SettingButton
                         />
                     </div>
                 </div>
