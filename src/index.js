@@ -13,7 +13,6 @@ import reactmsg from "./reactmsg.json";
 
 function Clock(props) {
     const [date, setDate] = useState(new Date());
-    const [hour12, setHour12] = useState(false);
 
     useEffect(() => {
         const timerID = setInterval(() => { setDate(new Date()); }, 1000);
@@ -25,7 +24,6 @@ function Clock(props) {
 
     function clickEvent() {
         props.onClick(date);
-        setHour12(hour12 ^ 1);
     }
 
     // 時刻表示
@@ -39,7 +37,7 @@ function Clock(props) {
     let seconds = date.getSeconds();
     let ampm = null;
 
-    if (hour12) {
+    if (!props.hour24) {
         ampm = hours >= 12 ? "PM" : "AM";
         hours = hours % 12;
     }
@@ -120,17 +118,23 @@ function PictureChange(props) {
 
 // トグルボタン
 function SettingButton(props) {
+    function clickEvent() {
+        props.chgHour24(props.hour24 ^ 1);
+    }
+
+    const chk24h = props.hour24 ? "checked" : "";
+
     return (
         <React.Fragment>
-            <div class="item-frame">
-                <input type='checkbox' id='setting-item-1' class="checkbox" />
-                <label class="switch" for='setting-item-1'></label>
-                <label class="text" for='setting-item-1'>台詞</label>
+            <div className="item-frame">
+                <input type='checkbox' id='setting-item-1' className="checkbox" />
+                <label className="switch" htmlFor='setting-item-1'></label>
+                <label className="text" htmlFor='setting-item-1'>つぶやき表示</label>
             </div>
-            <div class="item-frame">
-                <input type='checkbox' id='setting-item-2' class="checkbox" checked="checked" />
-                <label class="switch" for='setting-item-2'></label>
-                <label class="text" for='setting-item-2'>24時間</label>
+            <div className="item-frame" >
+                <input type='checkbox' id='setting-item-2' className="checkbox" defaultChecked onClick={clickEvent} />
+                <label className="switch" htmlFor='setting-item-2'></label>
+                <label className="text" htmlFor='setting-item-2'>24時間表示</label>
             </div>
         </React.Fragment>
     );
@@ -179,6 +183,7 @@ class AppClock extends React.Component {
         super(props);
         this.state = {
             dateHistory: null,
+            hour24: true,
             pictFlag: 1,
             reactMsg: null,
             apptimeStyle: { backgroundColor: "#8490c8" }
@@ -189,6 +194,12 @@ class AppClock extends React.Component {
         this.setState({
             dateHistory: d,
             pictFlag: this.state.pictFlag ^ 1,
+        });
+    }
+
+    changeHour24(f) {
+        this.setState({
+            hour24: f,
         });
     }
 
@@ -219,6 +230,7 @@ class AppClock extends React.Component {
                     <div className="app-clock">
                         <Clock
                             onClick={(d) => this.dateClick(d)}
+                            hour24={this.state.hour24}
                         />
                         <DateLabel
                             date={this.state.dateHistory}
@@ -231,6 +243,8 @@ class AppClock extends React.Component {
                     </div>
                     <div className="app-button">
                         <SettingButton
+                            hour24={this.state.hour24}
+                            chgHour24={(f) => this.changeHour24(f)}
                         />
                     </div>
                 </div>
