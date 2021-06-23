@@ -57,7 +57,7 @@ const tempMenu = Menu.buildFromTemplate([
     {
         label: '表示',
         submenu: [
-            { role: 'comment', label: 'コメント表示' },
+            { role: 'tweet', label: 'つぶやき表示' },
             { role: 'ampm', label: '24時間表示' }
         ]
     },

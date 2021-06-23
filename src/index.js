@@ -95,11 +95,16 @@ function PictureChange(props) {
 
     function dialogue() {
         if (timerID != null) {
-            clearInterval(timerID);
+            clearTimeout(timerID);
         }
 
-        props.setMsg(reactmsg.list[Math.floor(Math.random() * reactmsg.list.length)]);
-        setTimerID(setTimeout(() => { props.setMsg(null); }, 3000));
+        if (props.msgFlg) {
+            props.setMsg(reactmsg.list[Math.floor(Math.random() * reactmsg.list.length)]);
+            setTimerID(setTimeout(() => { props.setMsg(null); }, 3000));
+        } else {
+            props.setMsg(null);
+            setTimerID(null);
+        }
     }
 
     // const pic1 = "/pict/amiya.png";
@@ -118,23 +123,25 @@ function PictureChange(props) {
 
 // トグルボタン
 function SettingButton(props) {
-    function clickEvent() {
-        props.chgHour24(props.hour24 ^ 1);
+    function changeMessage(e) {
+        props.chgMsgFlg(e.target.checked);
     }
 
-    const chk24h = props.hour24 ? "checked" : "";
+    function changeHoure(e) {
+       props.chg24Hour(e.target.checked);
+    }
 
     return (
         <React.Fragment>
             <div className="item-frame">
-                <input type='checkbox' id='setting-item-1' className="checkbox" />
-                <label className="switch" htmlFor='setting-item-1'></label>
-                <label className="text" htmlFor='setting-item-1'>つぶやき表示</label>
+                <input type='checkbox' id='setting_item_1' className="checkbox" defaultChecked onChange={changeMessage} />
+                <label className="switch" htmlFor='setting_item_1'></label>
+                <label className="text" htmlFor='setting_item_1'>つぶやき表示</label>
             </div>
             <div className="item-frame" >
-                <input type='checkbox' id='setting-item-2' className="checkbox" defaultChecked onClick={clickEvent} />
-                <label className="switch" htmlFor='setting-item-2'></label>
-                <label className="text" htmlFor='setting-item-2'>24時間表示</label>
+                <input type='checkbox' id='setting_item_2' className="checkbox" defaultChecked onChange={changeHoure} />
+                <label className="switch" htmlFor='setting_item_2'></label>
+                <label className="text" htmlFor='setting_item_2'>24時間表示</label>
             </div>
         </React.Fragment>
     );
@@ -145,7 +152,7 @@ function Message(props) {
     const [msg, setMsg] = useState(null);
 
     function selectMsg() {
-        if (msg === null) {
+        if (msg === null && props.msgFlg) {
             const date = new Date();
             const msgList = date.getHours() >= 12 ? message.PM : message.AM;
             setMsg(msgList[Math.floor(Math.random() * msgList.length)]);
@@ -184,6 +191,7 @@ class AppClock extends React.Component {
         this.state = {
             dateHistory: null,
             hour24: true,
+            msgFlg: true,
             pictFlag: 1,
             reactMsg: null,
             apptimeStyle: { backgroundColor: "#8490c8" }
@@ -197,9 +205,15 @@ class AppClock extends React.Component {
         });
     }
 
-    changeHour24(f) {
+    change24Hour(f) {
         this.setState({
             hour24: f,
+        });
+    }
+
+    changeMessageFlag(f) {
+        this.setState({
+            msgFlg: f,
         });
     }
 
@@ -226,6 +240,7 @@ class AppClock extends React.Component {
                     <PictureChange
                         flg={this.state.pictFlag}
                         setMsg={(m) => this.reactMessage(m)}
+                        msgFlg={this.state.msgFlg}
                     />
                     <div className="app-clock">
                         <Clock
@@ -239,12 +254,13 @@ class AppClock extends React.Component {
                     <div className="app-message">
                         <Message
                             reactMsg={this.state.reactMsg}
+                            msgFlg={this.state.msgFlg}
                         />
                     </div>
                     <div className="app-button">
                         <SettingButton
-                            hour24={this.state.hour24}
-                            chgHour24={(f) => this.changeHour24(f)}
+                            chg24Hour={(f) => this.change24Hour(f)}
+                            chgMsgFlg={(f) => this.changeMessageFlag(f)}
                         />
                     </div>
                 </div>
