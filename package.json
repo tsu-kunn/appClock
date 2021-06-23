@@ -1,6 +1,6 @@
 {
   "name": "appclock",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "homepage": "./",
   "private": true,
   "main": "src/electron_main.js",
