@@ -184,88 +184,58 @@ function Message(props) {
 }
 
 
-class AppClock extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            dateHistory: null,
-            hour24: true,
-            msgFlg: true,
-            pictFlag: 1,
-            reactMsg: null,
-            apptimeStyle: { backgroundColor: "#8490c8" }
-        };
+function AppClock() {
+    const [dateHistory, setDateHistory] = useState(null);
+    const [hour24, setHour24] = useState(true);
+    const [msgFlg, setMsgFlg] = useState(true);
+    const [imgFlg, setImgFlg] = useState(1);
+    const [reactMsg, setReactMsg] = useState(null);
+    const [apptimeStyle, setApptimeStyle] = useState({ backgroundColor: "#8490c8" });
+
+    function dateClick(d) {
+        setDateHistory(d);
+        setImgFlg(imgFlg ^ 1);
     }
 
-    dateClick(d) {
-        this.setState({
-            dateHistory: d,
-            pictFlag: this.state.pictFlag ^ 1,
-        });
-    }
-
-    change24Hour(f) {
-        this.setState({
-            hour24: f,
-        });
-    }
-
-    changeMessageFlag(f) {
-        this.setState({
-            msgFlg: f,
-        });
-    }
-
-    reactMessage(m) {
-        this.setState({
-            reactMsg: m,
-        });
-    }
-
-    changeApptimeStyle(bgColor) {
+    function changeApptimeStyle(bgColor) {
         let chgStyle = {
             backgroundColor: bgColor
         }
-
-        this.setState({
-            apptimeStyle: chgStyle
-        })
+        setApptimeStyle(chgStyle);
     }
 
-    render() {
-        return (
-            <div className="app-main">
-                <div className="app-time" style={this.state.apptimeStyle}>
-                    <PictureChange
-                        flg={this.state.pictFlag}
-                        setMsg={(m) => this.reactMessage(m)}
-                        msgFlg={this.state.msgFlg}
+    return (
+        <div className="app-main">
+            <div className="app-time" style={apptimeStyle}>
+                <PictureChange
+                    flg={imgFlg}
+                    setMsg={(m) => setReactMsg(m)}
+                    msgFlg={msgFlg}
+                />
+                <div className="app-clock">
+                    <Clock
+                        onClick={(d) => dateClick(d)}
+                        hour24={hour24}
                     />
-                    <div className="app-clock">
-                        <Clock
-                            onClick={(d) => this.dateClick(d)}
-                            hour24={this.state.hour24}
-                        />
-                        <DateLabel
-                            date={this.state.dateHistory}
-                        />
-                    </div>
-                    <div className="app-message">
-                        <Message
-                            reactMsg={this.state.reactMsg}
-                            msgFlg={this.state.msgFlg}
-                        />
-                    </div>
-                    <div className="app-button">
-                        <SettingButton
-                            chg24Hour={(f) => this.change24Hour(f)}
-                            chgMsgFlg={(f) => this.changeMessageFlag(f)}
-                        />
-                    </div>
+                    <DateLabel
+                        date={dateHistory}
+                    />
+                </div>
+                <div className="app-message">
+                    <Message
+                        reactMsg={reactMsg}
+                        msgFlg={msgFlg}
+                    />
+                </div>
+                <div className="app-button">
+                    <SettingButton
+                        chg24Hour={(f) => setHour24(f)}
+                        chgMsgFlg={(f) => setMsgFlg(f)}
+                    />
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 /*
