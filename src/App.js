@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import './App.css';
-// import { useSelector, useDispatch } from "react-redux";
-// import { Actions } from "./store/Actions";
+import { useSelector, useDispatch } from "react-redux";
+import { Actions } from "./store/Actions";
 
 import pic1 from "./image/amiya.png";
 import pic2 from "./image/W_05.png";
@@ -185,23 +185,24 @@ function Message(props) {
 
 
 function AppClock() {
-    const [dateHistory, setDateHistory] = useState(null);
-    const [hour24, setHour24] = useState(true);
-    const [msgFlg, setMsgFlg] = useState(true);
-    const [imgFlg, setImgFlg] = useState(1);
-    const [reactMsg, setReactMsg] = useState(null);
-    const [apptimeStyle, setApptimeStyle] = useState({ backgroundColor: "#8490c8" });
+    const dateHistory = useSelector((state) => state.dateHistory);
+    const hour24 = useSelector((state) => state.hour24);
+    const msgFlg = useSelector((state) => state.msgFlg);
+    const imgFlg = useSelector((state) => state.imgFlg);
+    const reactMsg = useSelector((state) => state.reactMsg);
+    const apptimeStyle = useSelector((state) => state.apptimeStyle);
+    const dispatch = useDispatch();
 
     function dateClick(d) {
-        setDateHistory(d);
-        setImgFlg(imgFlg ^ 1);
+        dispatch(Actions.setDateHistory(d));
+        dispatch(Actions.changeImage());
     }
 
     function changeApptimeStyle(bgColor) {
         let chgStyle = {
             backgroundColor: bgColor
         }
-        setApptimeStyle(chgStyle);
+        dispatch(Actions.setApptimeStyle(chgStyle));
     }
 
     return (
@@ -209,7 +210,7 @@ function AppClock() {
             <div className="app-time" style={apptimeStyle}>
                 <PictureChange
                     flg={imgFlg}
-                    setMsg={(m) => setReactMsg(m)}
+                    setMsg={(m) => dispatch(Actions.setReactMsg(m))}
                     msgFlg={msgFlg}
                 />
                 <div className="app-clock">
@@ -229,8 +230,8 @@ function AppClock() {
                 </div>
                 <div className="app-button">
                     <SettingButton
-                        chg24Hour={(f) => setHour24(f)}
-                        chgMsgFlg={(f) => setMsgFlg(f)}
+                        chg24Hour={(f) => dispatch(Actions.setHour24(f))}
+                        chgMsgFlg={(f) => dispatch(Actions.setMsgFlg(f))}
                     />
                 </div>
             </div>

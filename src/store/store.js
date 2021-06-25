@@ -1,31 +1,45 @@
 import { createStore } from "redux";
 
 const initialState = {
-    count0: 0,
-    count1: 100,
+    dateHistory: null,
+    hour24: true,
+    msgFlg: true,
+    imgFlg: 1,
+    reactMsg: null,
+    apptimeStyle: { backgroundColor: "#8490c8" },
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case "INCREASE_COUNT":
+        case "SET_DATE_HISTORY":
             return {
                 ...state,
-                count0: state.count0 + 1,
+                dateHistory: action.date,
             };
-        case "DECREASE_COUNT":
+        case "SET_HOUR24":
             return {
                 ...state,
-                count0: state.count0 - 1,
+                hour24: action.flag,
             };
-        case "INC_COUNT1":
+        case "SET_MSGFLG":
             return {
                 ...state,
-                count1: state.count1 + 1
+                msgFlg: action.flag,
             };
-        case "DEC_COUNT1":
+        case "CHANGE_IMAGE":
             return {
                 ...state,
-                count1: state.count1 - 1
+                imgFlg: state.imgFlg ^ 1,
+            };
+        case "SET_REACTMSG":
+            return {
+                ...state,
+                reactMsg: action.msg,
+            };
+        case "SET_APPTIME_STYLE":
+            return {
+                ...state,
+                apptimeStyle: action.style,
             };
         default:
             return state;
