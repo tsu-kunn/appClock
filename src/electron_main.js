@@ -92,7 +92,7 @@ function createWindow() {
     });
 
     // Windowサイズ固定ではなく、最大・最小でサイズ制限
-    mainWindow.setMaximumSize(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
+    // mainWindow.setMaximumSize(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
     mainWindow.setMinimumSize(DEFAULT_SIZE.width, DEFAULT_SIZE.height);
 
     // load the index.html of the app.
