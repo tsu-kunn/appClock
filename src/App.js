@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import './App.css';
-// import { useSelector, useDispatch } from "react-redux";
-// import { Actions } from "./store/Actions";
 
 import pic1 from "./image/amiya.png";
 import pic2 from "./image/W_05.png";
@@ -238,21 +236,5 @@ function AppClock() {
     );
 }
 
-/*
-function App() {
-  const count = useSelector((state) => state.count0);
-  const dispatch = useDispatch();
-
-  return (
-    <div className="App">
-      <h1>Redux Learn</h1>
-      <p>Count: {count}</p>
-      <button onClick={() => dispatch(Actions.increase())}>Up</button>
-      <button onClick={() => dispatch(Actions.decrease())}>Down</button>
-      <Cout />
-    </div>
-  );
-}
-*/
 
 export default AppClock;
