@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import './App.css';
 
-import pic1 from "./image/amiya.png";
-import pic2 from "./image/W_05.png";
+import pic1 from "./image/Indigo_01.png";
+import pic2 from "./image/Indigo_02.png";
 
 import message from "./message.json";
 import reactmsg from "./reactmsg.json";
@@ -195,6 +195,7 @@ function AppClock() {
         setImgFlg(imgFlg ^ 1);
     }
 
+    // CSSの値変更例
     function changeApptimeStyle(bgColor) {
         let chgStyle = {
             backgroundColor: bgColor

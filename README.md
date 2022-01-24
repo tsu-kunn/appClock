@@ -18,11 +18,11 @@ Create React Appで作成し、Electronでアプリの皮を被せています�
 ## 補足
 - `npm start` してもブラウザが自動起動しない
   - ".env" ファイルで起動しないように設定しているため（VSCodeデバッグ向け）
+  - `http://localhost:3000/` に手動アクセス
 - build フォルダをリポジトリ管理
   - ".gitignore" で build 部分をコメントアウト
 
 ## 画像
-- amiya.png
-  - https://arknights.wikiru.jp/index.php?%A5%A2%A1%BC%A5%DF%A5%E4
-- W_05.png
-  - https://arknights.wikiru.jp/index.php?W
+- Indigo_01.png
+- Indigo_02.png
+  - https://arknights.wikiru.jp/index.php?%A5%A4%A5%F3%A5%C7%A5%A3%A5%B4
